@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kitchen - TableQR</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans">
+  <main class="p-6 max-w-6xl mx-auto">
+    <h1 class="text-2xl font-bold text-gray-800 mb-6">Kitchen Dashboard</h1>
+    <div id="orders" class="space-y-6"></div>
+  </main>
+
+  <script>
+    const orders = JSON.parse(localStorage.getItem("orders")) || {};
+    const ordersDiv = document.getElementById("orders");
+
+    Object.keys(orders).forEach(table => {
+      const items = orders[table];
+      const div = document.createElement("div");
+      div.className = "bg-white rounded-xl shadow p-4";
+      div.innerHTML = `
+        <h2 class="text-lg font-semibold mb-2">Table ${table}</h2>
+        <ul class="list-disc pl-5 space-y-1">
+          ${items.map(i => `<li>${i.emoji} ${i.name} - ₹${i.price} ${i.spec ? `(Spec: ${i.spec})` : ""}</li>`).join("")}
+        </ul>
+      `;
+      ordersDiv.appendChild(div);
+    });
+  </script>
+</body>
+</html>
